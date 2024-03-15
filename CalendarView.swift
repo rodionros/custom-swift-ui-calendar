@@ -11,9 +11,11 @@ import SwiftUI
 struct CalendarView: View {
     @Binding var isPresented: Bool
     @State private var currentDate = Date.now
+    @State private var days: [Date] = []
+    
     let daysOfWeek = Date.capitalizedFirstLettersOfWeekdays
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
-    @State private var days: [Date] = []
+    
     
     init(currentDate: Binding<Date>, isPresented: Binding<Bool>) {
         self._currentDate = State(initialValue: Date())

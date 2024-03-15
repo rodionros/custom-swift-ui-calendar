@@ -8,15 +8,20 @@
 import Foundation
 
 extension Date {
+    
     func monthAsString() -> String {
         let dateFormatter = DateFormatter()
+        
         dateFormatter.dateFormat = "MMMM"
+        
         return dateFormatter.string(from: self)
     }
     
     func yearAsString() -> String {
         let dateFormatter = DateFormatter()
+        
         dateFormatter.dateFormat = "yyyy"
+        
         return dateFormatter.string(from: self)
     }
     
@@ -32,6 +37,7 @@ extension Date {
     
     static var fullMonthNames: [String] {
         let dateFormatter = DateFormatter()
+        
         dateFormatter.locale = Locale.current
 
         return (1...12).compactMap { month in
@@ -47,11 +53,13 @@ extension Date {
     
     var endOfMonth: Date {
         let lastDay = Calendar.current.dateInterval(of: .month, for: self)!.end
+        
         return Calendar.current.date(byAdding: .day, value: -1, to: lastDay)!
     }
     
     var startOfPreviousMonth: Date {
         let dayInPreviousMonth = Calendar.current.date(byAdding: .month, value: -1, to: self)!
+        
         return dayInPreviousMonth.startOfMonth
     }
     
@@ -62,6 +70,7 @@ extension Date {
     var sundayBeforeStart: Date {
         let startOfMonthWeekday = Calendar.current.component(.weekday, from: startOfMonth)
         let numberFromPreviousMonth = startOfMonthWeekday - 1
+        
         return Calendar.current.date(byAdding: .day, value: -numberFromPreviousMonth, to: startOfMonth)!
     }
     
@@ -70,11 +79,13 @@ extension Date {
         //Current month days
         for dayOffset in 0..<numberOfDaysInMonth {
             let newDay = Calendar.current.date(byAdding: .day, value: dayOffset, to: startOfMonth)
+            
             days.append(newDay!)
         }
         // Previous month days
         for dayOffset in 0..<startOfPreviousMonth.numberOfDaysInMonth {
             let newDay = Calendar.current.date(byAdding: .day, value: dayOffset, to: startOfPreviousMonth)
+            
             days.append(newDay!)
         }
         
@@ -90,10 +101,10 @@ extension Date {
     }
     
     var nextMonth: Date {
-            Calendar.current.date(byAdding: .month, value: 1, to: self)!
-        }
+        Calendar.current.date(byAdding: .month, value: 1, to: self)!
+    }
 
-        var previousMonth: Date {
-            Calendar.current.date(byAdding: .month, value: -1, to: self)!
-        }
+    var previousMonth: Date {
+        Calendar.current.date(byAdding: .month, value: -1, to: self)!
+    }
 }
