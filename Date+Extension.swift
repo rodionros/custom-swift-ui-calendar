@@ -8,6 +8,13 @@
 import Foundation
 
 extension Date {
+    func dayAsString() -> String {
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "dd"
+        
+        return dateFormatter.string(from: self)
+    }
     
     func monthAsString() -> String {
         let dateFormatter = DateFormatter()

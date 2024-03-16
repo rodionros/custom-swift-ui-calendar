@@ -3,12 +3,12 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var isCalendarPresented = false
-    @State private var currentDate = Date.now
+    @State private var isDateTimePickerOpened = false
+    @State private var currentDate = Date()
     
     let buttonHeight: CGFloat = 60
     
     var body: some View {
-        
         GeometryReader { geometry in
             ZStack {
                 ScrollView {
@@ -32,8 +32,14 @@ struct ContentView: View {
                         
                         if isCalendarPresented {
                             // Show the calendar view above the button
-                            CalendarView(currentDate: $currentDate, isPresented: $isCalendarPresented)
-                                .frame(width: 300, height: 400) // Customize the size as needed
+                            CalendarView(
+                                isPresented: $isCalendarPresented,
+                                isDateTimePickerOpened: $isDateTimePickerOpened,
+                                onPickDate: { date in
+                                    self.currentDate = date // Update currentDate with the picked date
+                                    self.isCalendarPresented = false // Hide the calendar after selecting a date
+                                })
+                                .frame(width: 300, height: 550) // Customize the size as needed
                                 .zIndex(1) // Place the calendar above other views
                         }
                     }
