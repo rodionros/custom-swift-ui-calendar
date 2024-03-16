@@ -9,8 +9,11 @@ import Foundation
 import SwiftUI
 
 struct CalendarView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     @Binding var isPresented: Bool
     @Binding var isDateTimePickerOpened: Bool
+    
     @State private var displayDate = Date()
     @State private var selectedDate = Date()
     @State private var days: [Date] = []
@@ -33,13 +36,13 @@ struct CalendarView: View {
                 HStack {
                     Text("\(displayDate.monthAsString()) \(displayDate.yearAsString())")
                         .font(.headline)
-                        .foregroundColor(.black)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                     Spacer()
                 }
                 HStack {
                     Text("\(selectedDate.monthAsString()) \(selectedDate.dayAsString()) \(selectedDate.yearAsString())")
                         .font(.subheadline)
-                        .foregroundColor(.black)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                         
                     Spacer()
                     Image(systemName: "chevron.down")
@@ -67,7 +70,7 @@ struct CalendarView: View {
                         ForEach(daysOfWeek.indices, id: \.self) { index in
                             Text(daysOfWeek[index])
                                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-                                .foregroundColor(.gray)
+                                .foregroundColor(colorScheme == .dark ? .gray : .gray)
                                 .fontWeight(.bold)
                                 .font(.caption)
                         }
@@ -87,7 +90,7 @@ struct CalendarView: View {
                                             .foregroundStyle(
                                                 Date.now.startOfDay == day.startOfDay
                                                 ? .blue
-                                                : .white
+                                                : Color(UIColor.systemGray6)
                                             )
                                             .frame(width: 30)
                                     )
@@ -110,6 +113,7 @@ struct CalendarView: View {
             Divider()
             HStack{
                 Text("Pick selected date")
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
                 Spacer()
                 Image(systemName: "arrow.right")
             }
@@ -122,6 +126,7 @@ struct CalendarView: View {
             Divider()
             HStack{
                 Text("Reset to today")
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
                 Spacer()
                 Image(systemName: "calendar")
             }
@@ -138,7 +143,7 @@ struct CalendarView: View {
             days = displayDate.calendarDisplayDays
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
+        .background(colorScheme == .dark ? Color(UIColor.systemGray6) : .black)
         .cornerRadius(20)
         .shadow(radius: 10)
         .gesture(
